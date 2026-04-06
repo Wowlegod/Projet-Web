@@ -1,0 +1,133 @@
+{% include "header.html" %}
+
+<div class="container mt-4">
+    <div class="p-5 mb-4 bg-primary text-white rounded-3 shadow">
+        <h1>Bienvenue à Marseille 🌊</h1>
+        <p class="lead">Découvrez les transports et les activités de la cité phocéenne.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 mb-4">
+                <h3 class="text-primary">🚇 Les Transports</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Métro M1/M2 :</strong> 1.80€ le ticket</li>
+                    <li class="list-group-item"><strong>Tramway T1/T2/T3 :</strong> Centre-ville</li>
+                    <li class="list-group-item"><strong>Navettes Maritimes :</strong> Vers la Pointe-Rouge, le Frioul, les Goudes, ou le Chateau d'If ! </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 mb-4 bg-light">
+                <h3 class="text-primary text-center">🌤 Météo Marseille</h3>
+                <div id="temp-marseille" class="display-4 text-center">--°C</div>
+                <p id="desc-meteo" class="text-center text-muted">Chargement...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=43.29&longitude=5.37&current=temperature_2m')        
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('temp-marseille').innerText = Math.round(data.current.temperature_2m) + "°C";
+            document.getElementById('desc-meteo').innerText = "Température en direct";
+        });
+</script>
+
+<div class="section-wrapper container mt-5">
+    <h2 class="section-title text-primary fw-bold mb-4">🎭 Agenda & Événements à ne pas manquer !!!</h2>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-primary text-white fw-bold">⚽ Sport</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">OM vs FC Metz</h5>
+                    <p class="card-text small text-muted">📍 Stade Vélodrome</p>
+                    <p class="card-text">Venez supporter l'OM face à Metz pour une ambiance électrique.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-primary fw-bold">📅 Vendredi - 21h05</small><br>
+                    <a href="https://billetterie.om.fr/fr/catalogue/match-om-fc-metz"  class="btn btn-sm btn-outline-primary mt-2">Billetterie</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-success text-white fw-bold">🌿 Écologie</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Table ronde : Pollution Plastique</h5>
+                    <p class="card-text small text-muted">📍 Bibliothèque de l'Alcazar</p>
+                    <p class="card-text">Débat et solutions contre la pollution plastique en Méditerranée.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-success fw-bold">📅 Mercredi - 17h30 (Gratuit)</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-warning text-dark fw-bold">🌸 Marché</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Marché du Printemps</h5>
+                    <p class="card-text small text-muted">📍 Théâtre des Calanques</p>
+                    <p class="card-text">Flânez parmi les créateurs locaux au pied des massifs de Montredon.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-warning fw-bold text-dark">📅 Samedi - 10h à 17h (Gratuit)</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-danger text-white fw-bold">🎵 Concert</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Luxe en concert</h5>
+                    <p class="card-text small text-muted">📍 Cepac Silo</p>
+                    <p class="card-text">Une soirée mémorable avec le groupe Luxe sur la scène du Silo.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-danger fw-bold">📅 Samedi - 20h (Dès 40€)</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-info text-dark fw-bold">🎨 Exposition</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Nouvelle Exposition MAC</h5>
+                    <p class="card-text small text-muted">📍 Musée d'Art Contemporain</p>
+                    <p class="card-text">Découvrez les dernières acquisitions et installations du musée.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-info fw-bold text-dark">📅 Jusqu'au 20 sept. (Gratuit à 6€)</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-secondary text-white fw-bold">🎭 Festival</div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Festival des Accents</h5>
+                    <p class="card-text small text-muted">📍 Marseille & Aix</p>
+                    <p class="card-text">Célébration des langues et des accents à travers des spectacles.</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <small class="text-secondary fw-bold">📅 Jeudi à Samedi (Gratuit)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

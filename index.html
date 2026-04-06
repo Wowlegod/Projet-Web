@@ -1,0 +1,38 @@
+{% include "header.html" %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center mt-5">
+        <h1 class="display-4 fw-bold text-primary mb-3">Où partez-vous ?</h1>
+        <p class="lead text-secondary mb-5">Trouvez les informations de transport pour votre prochaine destination.</p>
+
+        <div class="card shadow-lg border-0 p-4">
+            <form action="/search" method="GET" class="row g-2">
+                <div class="col-md-9">
+                    <input type="text" name="q" class="form-control form-control-lg" placeholder="Entrez une ville (ex: Paris, Marseille...)" required>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Rechercher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class "row mt-6"> 
+    <div class = "col-12 text-center mb-4">
+        <h2 class="fw-bold">🌟 À la une</h2>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="card shadow border-0 overflow-hidden text-white">
+            <div class="card shadow-sm border-0 bg-primary text-white p-4 text-center">
+                    <div class="text-center">
+                    <h3 class="fw-bold">Le guide de Marseille </h3>
+                    <p>Événements, sorties et transports en temps réel.</p>
+                    <a href="/marseille" class="btn btn-light fw-bold text-primary">Découvrir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% include "footer.html" %}

@@ -1,0 +1,86 @@
+{% include "header.html" %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="container mt-5">
+    <div class="p-5 mb-4 bg-primary text-white rounded-3 shadow">
+        <div class="container-fluid py-2">
+            <h1 class="display-2 fw-bold">{{ city.city_name }}</h1>
+            <hr class="my-4" style="background-color: white; height: 2px; opacity: 0.5;">
+            <div class="d-flex gap-3 align-items-center">
+                <span class="badge bg-light text-primary fs-6">☀️ <span id="temp-val">--°C</span></span>
+                
+                {% if session.user_id %}
+                <form action="/add-favorite" method="POST" class="ms-auto">
+                    <input type="hidden" name="city_id" value="{{ city.id }}">
+                    <button type="submit" class="btn btn-light btn-sm fw-bold text-primary shadow-sm">⭐ Ajouter aux favoris</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm mb-4 p-4">
+                <h3 class="text-primary fw-bold mb-4">🚇 Détails du réseau</h3>
+                <p><strong>Modes disponibles :</strong> {{ city.transport_type }}</p>
+                <p><strong>Prix estimé :</strong> <span class="badge bg-success">{{ city.price_range }}</span></p>
+                <p><strong>Application officielle :</strong> <code>{{ city.official_app }}</code></p>
+                <hr>
+                <h5 class="fw-bold text-secondary">💡 L'astuce locale</h5>
+                <p class="fst-italic text-muted">{{ city.tips }}</p>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="card-header bg-white fw-bold py-3 text-center">🗺️ Localisation</div>
+                <div id="map" style="height: 400px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        
+        
+    // j'ai trouvé ce script sur un reddit qui montrait m'expliquait comment utiliser l'api openstreetmap sur un site (et en bonus la météo)
+    const cityName = "{{ city.city_name }}";
+    const regionName = "{{ city.region }}";
+
+    var map = L.map('map').setView([46.6033, 1.8883], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+
+    const query = encodeURIComponent(`${cityName}, France`);
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const lat = data[0].lat;
+                const lon = data[0].lon;
+
+                map.setView([lat, lon], 13);
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup(`<b>${cityName}</b>`)
+                    .openPopup();
+                
+                    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m`);
+            } else {
+                console.warn("Nominatim n'a pas trouvé la ville.");
+            }
+        })
+        .then(res => res ? res.json() : null)
+        .then(weatherData => {
+            if (weatherData && weatherData.current) {
+                document.getElementById('temp-val').innerText = Math.round(weatherData.current.temperature_2m) + "°C";
+            }
+        })
+</script>
+
+{% include "footer.html" %}

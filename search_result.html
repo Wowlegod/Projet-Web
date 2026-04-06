@@ -1,0 +1,30 @@
+{% include "header.html" %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Résultats pour "<span class="text-primary">{{ query }}</span>"</h2>
+
+    <div class="row">
+        {% for city in results %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark">{{ city.city_name }}</h5>
+                        <p class="card-text">
+                            <span class="badge bg-info text-dark">{{ city.transport_type }}</span>
+                        </p>
+                        <a href="/city/{{ city.id }}" class="btn btn-outline-primary btn-sm">Voir les détails</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning shadow-sm" role="alert">
+                    📍 Désolé, aucune ville ne correspond à votre recherche. 
+                    <a href="/" class="alert-link">Mettez une autre ville non ?</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% include "footer.html" %}
